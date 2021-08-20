@@ -1,6 +1,5 @@
 import React from 'react';
 
-// const Clock = () => <h1>hello from clock</h1>;
 
 class Clock extends React.Component {
     constructor (props) {
@@ -9,6 +8,7 @@ class Clock extends React.Component {
         this.state = {
             start: new Date()
         };
+        this.interval = null
 
         this.tick = this.tick.bind(this);
     }
@@ -18,7 +18,12 @@ class Clock extends React.Component {
     }
 
     componentDidMount() {
-        setInterval(this.tick, 1000);
+        const id = setInterval(this.tick, 1000);
+        this.interval = id;
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     render() {
@@ -33,7 +38,7 @@ class Clock extends React.Component {
             <div className="clock">
                 <p>Time: {this.state.start.getHours()}:{this.state.start.getMinutes()}:{this.state.start.getSeconds()}</p>
                 <p>Date: {days[this.state.start.getDay()]} {months[this.state.start.getMonth()]} {this.state.start.getDate()} {this.state.start.getUTCFullYear()}</p>
-
+                {/* <button onClick="this.componentWillUnmount()">END ME</button> */}
             </div>
         )
     }
